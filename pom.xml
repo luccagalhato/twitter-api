@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.lucca</groupId>
 	<artifactId>twitter-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>twitter-api</name>
 	<description>Demo project for Spring Boot.  </description>
 	<properties>
@@ -80,6 +80,10 @@
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpmime</artifactId>
         <version>4.3.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
 		
 	</dependencies>

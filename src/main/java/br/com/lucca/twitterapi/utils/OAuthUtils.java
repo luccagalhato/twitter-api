@@ -16,17 +16,60 @@ public class OAuthUtils {
 		String oauthQuery = new OAuth1AuthorizationHeaderBuilder()
 	            .withMethod("POST")
 	            .withURL("https://api.twitter.com/oauth/request_token")
-	            .withTokenSecret("pYMDi2gZJvLtkgqIpUFKBUmUoD0IKacz3wlW1TXCQVzAr")
-	            .withConsumerSecret("cD7LP3jrZ6PV26yaxG5NSJs18V0LrFpMqYI8Fotl8Xg8640kO1")
-	            .withParameter("oauth_callback", "http://lucca-challenge-ibm-app.s3-website.us-east-2.amazonaws.com/callback")
-	            .withParameter("oauth_consumer_key", "yPJT22WSBuND8YTAZq0vAa5RU")
-	            .withParameter("oauth_token", "1438917623203483648-618OECKRGuhkU0fpQNpCR4lHebnoVX")
+	            .withTokenSecret(ConstantsUtils.ACCESS_TOKEN_SECRET)
+	            .withConsumerSecret(ConstantsUtils.SECRET_KEY)
+	            .withParameter("oauth_callback", ConstantsUtils.CALLBACK_URL)
+	            .withParameter("oauth_consumer_key", ConstantsUtils.API_KEY)
+	            .withParameter("oauth_token", ConstantsUtils.ACCESS_TOKEN)
 	            .withParameter("oauth_nonce", getNonce())
 	            .build();
 		
 		oauthQuery = oauthQuery.replace("OAuth ", "");
 		oauthQuery = oauthQuery.replace(", ", "&");
 		oauthQuery = oauthQuery.replace("\"", "");
+		
+		System.out.println(oauthQuery);
+		
+		return oauthQuery;
+	}
+	
+	public String getAccessTokenQueryParameters(String oAuthToken, String oAuthVerifier) {
+		String oauthQuery = new OAuth1AuthorizationHeaderBuilder()
+				.withMethod("POST")
+	            .withURL("https://api.twitter.com/oauth/request_token")
+	            .withTokenSecret(ConstantsUtils.ACCESS_TOKEN_SECRET)
+	            .withConsumerSecret(ConstantsUtils.SECRET_KEY)
+	            .withParameter("oauth_consumer_key", ConstantsUtils.API_KEY)
+	            .withParameter("oauth_token", oAuthToken)
+	            .withParameter("oauth_verifier", oAuthVerifier)
+	            .withParameter("oauth_nonce", getNonce())
+	            .build();
+		
+		oauthQuery = oauthQuery.replace("OAuth ", "");
+		oauthQuery = oauthQuery.replace(", ", "&");
+		oauthQuery = oauthQuery.replace("\"", "");
+		
+		System.out.println(oauthQuery);
+		
+		return oauthQuery;
+	}
+	
+	public String getUserDataQueryParameters(String accessToken, String accessTokenSecret) {
+		String oauthQuery = new OAuth1AuthorizationHeaderBuilder()
+				.withMethod("GET")
+	            .withURL("https://api.twitter.com/1.1/account/verify_credentials.json")
+	            .withTokenSecret(accessTokenSecret)
+	            .withConsumerSecret(ConstantsUtils.SECRET_KEY)
+	            .withParameter("oauth_consumer_key", ConstantsUtils.API_KEY)
+	            .withParameter("oauth_token", accessToken)
+	            .withParameter("oauth_nonce", getNonce())
+	            .build();
+		
+		oauthQuery = oauthQuery.replace("OAuth ", "");
+		oauthQuery = oauthQuery.replace(", ", "&");
+		oauthQuery = oauthQuery.replace("\"", "");
+		
+		System.out.println(oauthQuery);
 		
 		return oauthQuery;
 	}
